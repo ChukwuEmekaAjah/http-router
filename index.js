@@ -1,11 +1,26 @@
-function router(req, res){
-    
-    function handle(method, req, res){
-        console.log(method, req.url);
-        return res.end("Wahala ooo");
+function router(){
+    let handlers = {}
+    return {
+        serve : function(req, res){
+            if(handlers[req.url]){
+                if(req.method.toLowerCase() == handlers[req.url].method){
+                    return handlers[req.url].handler(req, res);
+                }
+            }
+            return res.end("Progress!")
+        },
+        
+        Router : function(){
+            return {
+                use : function(path, method, handler){
+                    handlers[path] = {
+                        method: method.toLowerCase(),
+                        handler: handler,
+                    }
+                }
+            }
+        }
     }
-
-    return handle(req.method, req, res);
 }
 
-module.exports = router;
+module.exports = router();
