@@ -1,27 +1,4 @@
-function router(){
-    let handlers = {}
-    return {
-        serve : function(req, res){
-            if(handlers[req.url]){
-                if(req.method.toLowerCase() == handlers[req.url].method){
-                    return handlers[req.url].handler(req, res);
-                }
-            }
-            return res.end("Progress!")
-        },
-        
-        Router : function(){
-            return {
-                handle : function(path, method, handler){
-                    handlers[path] = {
-                        method: method.toLowerCase(),
-                        handler: handler,
-                    }
-                }
-            }
-        }
-    }
-}
+const util = require('util');
 
 const superHandlers = {};
 
@@ -37,6 +14,14 @@ function Serve(req, res){
             return superHandlers[req.url].handler(req, res);
         }
     }
+
+    for(let path in superHandlers){
+        if(superHandlers[path].type == 'regexp'){
+            if(superHandlers[path].path.test(req.url) == true){
+                return superHandlers[path].handler(req, res);
+            }
+        }
+    }
     return res.end("Progress!")
 }
 
@@ -46,6 +31,8 @@ function Router(){
             this.handlers[path] = {
                 method: method.toLowerCase(),
                 handler: handler,
+                path: path,
+                type: typeof(path) == 'string' ? 'string' : util.types.isRegExp(path) == true ? 'regexp' : null,
             }
         },
         handlers : {},
