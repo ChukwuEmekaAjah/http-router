@@ -24,4 +24,10 @@ Router.handle('/chuks/meatId', 'get', function(req, res){
     return res.end(`"path with meatId oo", ${req.url}`);
 })
 
+
+Router.handle('/ajah/:name/meak/:food', 'get', function(req, res){
+    console.log(`myself ooooo ${req.url}`, req.params)
+    return res.end(`"myself oooo", ${req.url}`);
+})
+
 module.exports = Router;
