@@ -1,0 +1,20 @@
+{
+  "name": "router",
+  "version": "1.0.0",
+  "description": "A lightweight HTTP router",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChukwuEmekaAjah/http-router.git"
+  },
+  "keywords": ["router", "http"],
+  "author": "Chukwuemeka Ajah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChukwuEmekaAjah/http-router/issues"
+  },
+  "homepage": "https://github.com/ChukwuEmekaAjah/http-router#readme"
+}
