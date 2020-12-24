@@ -10,12 +10,12 @@ Router.handle('/meat', 'get', function(req, res){
 })
 
 Router.handle('/people', 'get', function(req, res){
-    console.log(`"people ooo", ${req.url}`)
+    console.log(`"people ooo", ${JSON.stringify(req.query)} ${req.url}`)
     return res.end(`"people ooo", ${req.url}`);
 });
 
 Router.handle(/emekus/, 'get', function(req, res){
-    console.log("emekus ooo");
+    console.log("emekus ooo", req.query);
     return res.end("emekus is here")
 })
 

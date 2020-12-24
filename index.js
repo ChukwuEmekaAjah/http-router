@@ -1,4 +1,6 @@
 const util = require('util');
+const qs = require('querystring');
+const url = require('url');
 
 const superHandlers = {};
 
@@ -9,7 +11,7 @@ function Use(Router){
 }
 
 function isPathWithParams(path){
-    let pathWithParamsRegexp = /\/:.*?/gi;
+    let pathWithParamsRegexp = /(\/:.*?)+/gi;
 
     return pathWithParamsRegexp.test(path);
 }
@@ -25,16 +27,19 @@ function removeFalsePositives(array){
 
 function Serve(req, res){
     req.params = {}
-    if(superHandlers[req.url]){
-        if(req.method.toLowerCase() == superHandlers[req.url].method){
-            return superHandlers[req.url].handler(req, res);
+    req.query = qs.parse(req.url.slice(req.url.indexOf('?')+1,));
+
+    let pathname = url.parse(req.url).pathname
+    if(superHandlers[pathname]){
+        if(req.method.toLowerCase() == superHandlers[pathname].method){
+            return superHandlers[pathname].handler(req, res);
         }
     }
 
     for(let path in superHandlers){
         if(isPathWithParams(path)){
             let pathParts = removeFalsePositives(path.split('/'));
-            let urlParts = removeFalsePositives(req.url.split('/'));
+            let urlParts = removeFalsePositives(pathname.split('/'));
             console.log(pathParts, urlParts)
 
             if(pathParts.length != urlParts.length){
@@ -57,7 +62,7 @@ function Serve(req, res){
         }
 
         if(superHandlers[path].type == 'regexp'){
-            if(superHandlers[path].path.test(req.url) == true){
+            if(superHandlers[path].path.test(pathname) == true){
                 return superHandlers[path].handler(req, res);
             }
         }
