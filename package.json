@@ -10,11 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/ChukwuEmekaAjah/http-router.git"
   },
-  "keywords": ["router", "http"],
+  "keywords": [
+    "router",
+    "http"
+  ],
   "author": "Chukwuemeka Ajah",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ChukwuEmekaAjah/http-router/issues"
   },
-  "homepage": "https://github.com/ChukwuEmekaAjah/http-router#readme"
+  "homepage": "https://github.com/ChukwuEmekaAjah/http-router#readme",
+  "dependencies": {}
 }

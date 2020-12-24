@@ -40,8 +40,7 @@ function Serve(req, res){
         if(isPathWithParams(path)){
             let pathParts = removeFalsePositives(path.split('/'));
             let urlParts = removeFalsePositives(pathname.split('/'));
-            console.log(pathParts, urlParts)
-
+            
             if(pathParts.length != urlParts.length){
                 continue;
             }
@@ -62,12 +61,13 @@ function Serve(req, res){
         }
 
         if(superHandlers[path].type == 'regexp'){
-            if(superHandlers[path].path.test(pathname) == true){
+            if(superHandlers[path].path.test(pathname.slice(1,)) == true){
                 return superHandlers[path].handler(req, res);
             }
         }
     }
-    return res.end("Progress!")
+    
+    return res.end(`${req.url} Not found`)
 }
 
 function Router(){
