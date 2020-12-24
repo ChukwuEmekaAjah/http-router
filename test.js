@@ -31,7 +31,7 @@ Router.handle('/chuks/:id/name/:name/age/:age', 'get', function(req, res){
 
 router.Use(Router);
 
-http.createServer(router.Serve).listen(3000, async function(){
+const server = http.createServer(router.Serve).listen(3000, async function(){
     console.log("Server started on port ", 3000)
     http.get('http://localhost:3000/people?ajfdj=adfjl', function(res){
         let response = '';
@@ -81,4 +81,13 @@ http.createServer(router.Serve).listen(3000, async function(){
         })
     })
     
+});
+
+server.on('close', function(){
+    console.log("Shutting down server and exitting Node REPL")
 })
+
+// Using the heuristic that all tests would have finished running by then since tests are not sequential
+setTimeout(function(){
+    server.close();
+}, 2000)
