@@ -87,7 +87,7 @@ server.on('close', function(){
     console.log("Shutting down server and exitting Node REPL")
 })
 
-// Using the heuristic that all tests would have finished running by then since tests are not sequential
+// Using the heuristic that all tests would have finished running in 2 secs since tests are not sequential
 setTimeout(function(){
     server.close();
 }, 2000)
