@@ -4,7 +4,7 @@ A lightweight HTTP router for NodeJS with a very small API.
 # API
 ```js
     var http = require('http');
-    var app = require('router'); // entry point for handling HTTP requests to the server
+    var app = require('light-http-router'); // entry point for handling HTTP requests to the server
 
     var router = app.Router();
     router.handle('/people', 'get', function(req, res){
