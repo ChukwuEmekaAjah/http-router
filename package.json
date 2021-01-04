@@ -1,5 +1,5 @@
 {
-  "name": "router",
+  "name": "light-http-router",
   "version": "1.0.0",
   "description": "A lightweight HTTP router",
   "main": "index.js",
