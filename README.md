@@ -41,6 +41,33 @@ This is the main router of the app that creates http request handles and matches
 ```
 The `handle` method of the router object takes the url path, url method and request handler as arguments and maps them accordingly in the `handlers` collection.
 
+## Supported url patterns
+Light HTTP router supports different types of url paths such as plain string urls, regular expression paths and paths with url parameters. Examples are as follows:
+
+
+```javascript
+    router.handle('/poeple', 'get', function(req, res){ // plain string path
+        return res.end("How are you?");
+    })
+
+    router.handle(/name.*?/, 'get', function(req, res){ // regular expression path
+        return res.end("How are you?");
+    })
+
+    router.handle('/people/:personId', 'get', function(req, res){ // path with url parameters. this adds a params property into the request (http.incomingMessage) object
+        console.log("request parameter is", req.params.personId)
+        return res.end("How are you?");
+    })
+
+    router.handle('/people/:personId/orders/:orderId', 'get', function(req, res){ // path with url parameters. this adds a params property into the request (http.incomingMessage) object
+        console.log("request parameter is personId", req.params.personId)
+        console.log("request parameter is orderId", req.params.orderId)
+        return res.end("How are you?");
+    })
+```
+
+It also extracts query parameters from the url path and creates a query object property on the `request (http.incomingMessage)` object.
+
 ### .Use(router)
 Its only argument is a router object containing all the handlers that have been assigned to specific url paths. It mounts the router handlers into the app so that the app can now be aware of all the routes created across files in different routers. It can be used as follows:
 
