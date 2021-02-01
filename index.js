@@ -41,6 +41,7 @@ function Serve(req, res){
         if(isValidStaticFile(req.url)){
             return sendFile(req.url, res);
         } else {
+            res.statusCode = 404;
             return res.end(`${req.url} Not found`)
         } 
     } 
@@ -87,7 +88,7 @@ function Serve(req, res){
     }
     
     
-
+    res.statusCode = 404;
     return res.end(`${req.url} Not found`)
 }
 
@@ -126,12 +127,28 @@ function isValidStaticFile(url){
 function sendFile(url, res){
     const fileAddress = `${config.static}${url.split('/').join(path.sep)}`;
 
-    fs.readFile(fileAddress, function(err, fileData){
-        if(err){
-            return res.end("Error reading file")
-        }
-        return res.end(fileData);
-    })
+    // fs.readFile(fileAddress, function(err, fileData){
+    //     if(err){
+    //         return res.end("Error reading file")
+    //     }
+    //     return res.end(fileData);
+    // })
+
+    const readStream = fs.createReadStream(fileAddress);
+
+    // Handle stream events --> data, end, and error
+    readStream.on('data', function(chunk) {
+        res.write(chunk);
+    });
+    
+    readStream.on('end',function() {
+        res.end();
+    });
+    
+    readStream.on('error', function(err) {
+        res.statusCode = 404;
+        res.end(`${url} Not found`)
+    });
 }
 
 function Static(publicFolder){

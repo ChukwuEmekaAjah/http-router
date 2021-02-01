@@ -127,4 +127,4 @@ server.on('close', function(){
 // Using the heuristic that all tests would have finished running in 2 secs since tests are not sequential
 setTimeout(function(){
     server.close();
-}, 3000)
+}, 2000)
