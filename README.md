@@ -86,4 +86,4 @@ This method is passed into and called by the created http server whenever a requ
 ```
 
 ## Todo
-- Create functionality for parsing static file requests and responding accordingly
+- Create functionality for setting status codes

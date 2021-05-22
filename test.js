@@ -1,9 +1,9 @@
 const http = require("http");
 const assert = require('assert');
-const router = require("./index");
+const app = require("./index");
 
 
-const Router = router.Router();
+const Router = app.Router();
 Router.handle('/meat', 'get', function(req, res){
     console.log(`wahala ooo ${req.url}`)
     return res.end(`wahala ooo ${req.url}`);
@@ -27,11 +27,10 @@ Router.handle('/chuks/:id/name/:name/age/:age', 'get', function(req, res){
     return res.end(`Path with param data ${req.params.id}-${req.params.name}-${req.params.age}`);
 })
 
+app.Use(Router);
+app.Use(app.Static('public'))
 
-
-router.Use(Router);
-
-const server = http.createServer(router.Serve).listen(3000, async function(){
+const server = http.createServer(app.Serve).listen(3000, async function(){
     console.log("Server started on port ", 3000)
     http.get('http://localhost:3000/people?ajfdj=adfjl', function(res){
         let response = '';
@@ -80,6 +79,44 @@ const server = http.createServer(router.Serve).listen(3000, async function(){
             console.log("Passed test for path with complex params data")
         })
     })
+
+    // existing file in public folder
+    http.get('http://localhost:3000/index.js', function(res){
+        let response = '';
+        res.on('data', function(chunk){
+            response += chunk.toString();
+        })
+        
+        res.on('end', function(){
+            console.log("response is ", response);
+            console.log("Passed test for path with complex params data")
+        })
+    });
+
+    http.get('http://localhost:3000/fr.csv', function(res){
+        let response = '';
+        res.on('data', function(chunk){
+            response += chunk.toString();
+        })
+        
+        res.on('end', function(){
+            console.log("response is ", response);
+            console.log("Passed test for path with complex params data")
+        })
+    });
+
+    // non-existent file in public folder
+    http.get('http://localhost:3000/js/index.js', function(res){
+        let response = '';
+        res.on('data', function(chunk){
+            response += chunk.toString();
+        })
+        
+        res.on('end', function(){
+            console.log("response is ", response);
+            console.log("Passed test for path with complex params data")
+        })
+    });
     
 });
 
