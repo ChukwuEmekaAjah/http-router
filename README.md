@@ -85,5 +85,13 @@ This method is passed into and called by the created http server whenever a requ
 
 ```
 
+### .Static(staticFilesDirectory)
+This is a method to mount the location for serving static files. If you intend serving static files from your server, this is the function to call. 
+It is used as thus:
+
+```javascript
+    
+    app.Use(app.Static('public'))
+```
 ## Todo
 - Create functionality for setting status codes

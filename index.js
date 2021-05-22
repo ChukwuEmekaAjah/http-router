@@ -15,7 +15,6 @@ function Use(Utility){
 
     if(Utility.type === 'static'){
         config.static = Utility.setup();
-        console.log("static config is", config)
     }
 }
 
@@ -155,13 +154,6 @@ function Static(publicFolder){
     let staticDirectory = publicFolder;
     return {
         setup: function(){
-            // let folder = null;
-            // const pathname = `${process.cwd()}${path.sep}${publicFolder}`
-            // try{
-            //     folder = fs.opendirSync(pathname);
-            // } catch(exc){
-            //     console.log("error opening static files folder", exc);
-            // }
             return `${process.cwd()}${path.sep}${staticDirectory}`;
         },
         type: 'static',
